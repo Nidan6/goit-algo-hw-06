@@ -28,20 +28,23 @@ class Record:
         self.phones.append(Phone(phone))
 
     def remove_phone(self, phone):
-        self.phones.pop(phone)
+        for index, del_phone in enumerate(self.phones):
+            if del_phone.value == phone:
+                return self.phones.pop(index)
+
 
     def edit_phone(self, old_phone, new_phone):
-        for i, p in enumerate(self.phones):
-            if p.value == old_phone:
-                self.phones[i] = Phone(new_phone)
-                return
-        raise ValueError
+        for index, phone in enumerate(self.phones):
+            if phone.value == old_phone:
+                self.phones[index] = Phone(new_phone)
+                return new_phone
 
     def find_phone(self, phone):
-        if phone in self.phones:
-            return phone
-        else:
-            print("This phone is not in your Record")
+        for p in self.phones:
+            if p.value == phone:
+                return phone
+            else:
+                None
 
 
     def __str__(self):
@@ -49,13 +52,19 @@ class Record:
 
 class AddressBook(UserDict):
     def add_record(self, record: Record):
-        self.data[record.name.value] = record
+        if record.name.value in self.data:
+            return None
+        else:
+            self.data[record.name.value] = record
 
     def find(self, name):
         if name:
             return self.data.get(name, [])
         else:
-            print("This name is not in your Book")
+            return None
 
     def delete(self, name):
         del self.data[name]
+
+    def __str__(self):
+        return "\n".join(f"{name}: {record}" for name, record in self.data.items())
