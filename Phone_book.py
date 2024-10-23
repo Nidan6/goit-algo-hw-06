@@ -45,7 +45,7 @@ class Record:
         for p in self.phones:
             if p.value == phone:
                 return p
-            return None
+        return None
 
 
     def __str__(self):
