@@ -38,13 +38,14 @@ class Record:
             if phone.value == old_phone:
                 self.phones[index] = Phone(new_phone)
                 return new_phone
+            raise ValueError
+
 
     def find_phone(self, phone):
         for p in self.phones:
             if p.value == phone:
-                return phone
-            else:
-                None
+                return p
+            return None
 
 
     def __str__(self):
@@ -58,10 +59,7 @@ class AddressBook(UserDict):
             self.data[record.name.value] = record
 
     def find(self, name):
-        if name:
-            return self.data.get(name, [])
-        else:
-            return None
+        return self.data.get(name)
 
     def delete(self, name):
         del self.data[name]
